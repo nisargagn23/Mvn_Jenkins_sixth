@@ -10,6 +10,20 @@ pool:
   name: LOCALPOOL
 
 steps:
+- checkout: self
+
+- script: mvn clean test
+  displayName: 'Run maven Unit Tests'
+
+- task: PublishTestResults@2
+  inputs: 
+    testResultFiles: '**/target/surefire-reports/TEST-*.xml'
+    testResultsFormat: 'JUnit'
+    failTaskOnMissingResultsFile: true
+  displayName: 'Publish Maven Test Results'
+ 
+
+steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
